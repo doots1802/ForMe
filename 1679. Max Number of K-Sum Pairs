@@ -1,0 +1,43 @@
+1679. Max Number of K-Sum Pairs
+
+You are given an integer array nums and an integer k.
+
+In one operation, you can pick two numbers from the array whose sum equals k and remove them from the array.
+
+Return the maximum number of operations you can perform on the array.
+
+
+1.two pointers approach
+2.sort the nums vector so that we can compare it with sum
+3.if sum==k then count++
+4.if sum<k then because sorted array right side is bigger so right--
+
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end());
+        // using two poiners approach;
+        int i=0;
+        int j=nums.size()-1;
+        int count=0;
+        while(j>i)
+        {
+            if(nums[i]+nums[j]==k)
+            {
+                i++;
+                j--;
+                count++;
+            }
+            else if(nums[i]+nums[j]<k)
+            {
+                i++;
+            }
+            else
+            {
+                j--;
+            }
+        }
+        return count;
+
+    }
+};
