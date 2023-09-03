@@ -1,0 +1,59 @@
+2215. Find the Difference of Two Arrays
+
+Given two 0-indexed integer arrays nums1 and nums2, return a list answer of size 2 where:
+
+answer[0] is a list of all distinct integers in nums1 which are not present in nums2.
+answer[1] is a list of all distinct integers in nums2 which are not present in nums1.
+Note that the integers in the lists may be returned in any order.
+
+used unordered_map<int,bool>seen;
+1.set all seen[nums2[i]]=true;
+2.check with nums1[i] with the seen if seen.count(num)>0 then set it to false other true;
+3.check with nums2[i] with the seen if seen.count(num)>0 and seen[num]==false continue otherwise then set it to false;
+4.seen[num]==false to make sure elements are not repeated
+
+class Solution {
+public:
+    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+        vector<int>answer1;
+        vector<int>answer2;
+        vector<vector<int>>output;
+        unordered_map<int,bool>seen;
+        for(int i=0;i<nums2.size();i++)
+        {
+            seen[nums2[i]]=true;
+        }
+    
+        for(const int num:nums1)
+        {
+            if(seen.count(num)>0)
+            {
+                seen[num]=false;
+                continue;
+            }
+            else
+            {
+                answer1.push_back(num);
+                seen[num]=true;
+            }
+
+        }
+        for(const int num:nums2)
+        {
+            if(seen.count(num)>0 and seen[num]==false)
+            {
+               continue;
+            }
+            else
+            {
+                answer2.push_back(num);
+                seen[num]=false;
+            }
+            
+
+        }
+        output.push_back(answer1);
+        output.push_back(answer2);
+        return output;
+    }
+};
