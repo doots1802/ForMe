@@ -1,0 +1,38 @@
+1207. Unique Number of Occurrences
+Given an array of integers arr, return true if the number of occurrences of each value in the array is unique or false otherwise.
+
+1.unordered_map<int,int>seen; set all values to 0
+2.increment is count>0 
+3..unordered_map<int>freq check frequency if count>0 return false otherwise insert
+
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map<int,int>seen;
+        int count=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            seen[arr[i]]=0;
+        }
+        for(int i=0;i<arr.size();i++)
+        {
+            if(seen.count(arr[i])>0)
+            {
+                seen[arr[i]]+=1;
+                
+            }
+            
+        }
+        unordered_set<int>freq;
+        for(auto &i:seen)
+        {
+            if(freq.count(i.second)>0)
+            {
+                return false;
+            }
+            else{
+            freq.insert(i.second);}
+        }
+        return true;
+    }
+};
