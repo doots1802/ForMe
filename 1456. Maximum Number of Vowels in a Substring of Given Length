@@ -1,0 +1,126 @@
+1456. Maximum Number of Vowels in a Substring of Given Length
+Given a string s and an integer k, return the maximum number of vowel letters in any substring of s with length k.
+
+Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
+
+ 
+
+Example 1:
+
+Input: s = "abciiidef", k = 3
+Output: 3
+Explanation: The substring "iii" contains 3 vowel letters.
+
+brute fore approach
+using sliding window approach
+1.calculate count for 1 to k characters of string 
+2.take substring of window size k and check count and update max_count 
+
+class Solution {
+public:
+     bool isvowel(char x)
+        {
+            if (x == 'a' || x == 'e' || x == 'i' || x == 'o' || x == 'u' || x == 'A' ||x == 'E' || x == 'I' || x == 'O' || x == 'U')
+                return true;
+            return false;
+        }
+    int maxVowels(string s, int k) {
+        int count=0;
+        string sub="";
+        for(int i=0;i<k;i++)
+        {
+            sub+=s[i];
+            if(isvowel(s[i]))
+            {
+                count+=1;
+            }
+        }
+        int max_count=count;
+        int check_count=0;
+        count=0;
+        for(int i=1;i<s.size();i++)
+        {
+            sub = s.substr(i, k);
+            if(sub.size()!=k)
+            {
+                return max_count;
+            }
+            for(int i=0;i<k;i++)
+            {
+                if(isvowel(sub[i]))
+                {
+                    count+=1;
+                }
+                check_count=count;
+            }
+            count=0;
+            max_count=max(max_count,check_count);
+            cout<<max_count<<" ";
+            cout<<sub<<endl;
+        }
+        cout<<max_count;
+        return max_count;
+    }
+};
+
+1.check 1 to k and update count 
+2.check if i is a vowvel if it is count++
+3.check if i-k is a vowel if it is count --
+
+class Solution {
+public:
+    
+    // function for checking vowel 
+    
+    bool is_vowel(char c)
+    {
+        if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    int maxVowels(string str, int k) {
+        
+        int n = str.size();
+        
+        int count_vowel = 0;
+        
+        // traverse over the str
+        
+        int maxi = INT_MIN;
+        
+        for(int i = 0; i < n; i++)
+        {
+            if(i < k)
+            {
+                if(is_vowel(str[i]))
+                {
+                    count_vowel++;
+                }
+            }
+            else
+            {
+                // update maxi
+                
+                maxi = max(maxi, count_vowel);
+                
+                if(is_vowel(str[i]))
+                {
+                    count_vowel++;
+                }
+                
+                if(is_vowel(str[i - k]))
+                {
+                    count_vowel--;
+                }
+            }
+        }
+        
+        maxi = max(maxi, count_vowel);
+        
+        return maxi;
+    }
+};
