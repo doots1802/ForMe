@@ -1,0 +1,43 @@
+1493. Longest Subarray of 1's After Deleting One Element
+
+Given a binary array nums, you should delete one element from it.
+
+Return the size of the longest non-empty subarray containing only 1's in the resulting array. Return 0 if there is no such subarray.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,0,1]
+Output: 3
+Explanation: After deleting the number in position 2, [1,1,1] contains 3 numbers with value of 1's.
+
+1) same as finding max no of ones 
+2) choose the value of K as 1 and return count-1 as we will remove that 0 
+
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int i=0,j=0;
+        int count=0;
+        int k=1;
+        while(j<nums.size())
+        {
+            if(nums[j]==0)
+            {
+                k--;
+            }
+            if(k<0)
+            {
+                if(nums[i]==0)
+                {
+                    k++;
+                }
+                i++;
+            }
+            j++;
+            count=max(count,j-i);
+        }
+         return count-1;
+    }
+};
