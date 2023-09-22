@@ -1,0 +1,46 @@
+2130. Maximum Twin Sum of a Linked List
+
+In a linked list of size n, where n is even, the ith node (0-indexed) of the linked list is known as the twin of the (n-1-i)th node, if 0 <= i <= (n / 2) - 1.
+
+For example, if n = 4, then node 0 is the twin of node 3, and node 1 is the twin of node 2. These are the only nodes with twins for n = 4.
+The twin sum is defined as the sum of a node and its twin.
+
+Given the head of a linked list with even length, return the maximum twin sum of the linked list.
+
+1)iterate through list push the values into the result vector
+2)pointer to 0 and last value and decrement or increment accordingly
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int pairSum(ListNode* head) {
+        ListNode* temp=head;
+        vector<int>result;
+        while(temp!=NULL)
+        {
+            result.push_back(temp->val);
+            temp=temp->next;
+        }
+        int first=0;
+        int last=result.size()-1;
+        int sum=0;
+        int max1=0;
+        while(first<last)
+        {
+            sum=result[first]+result[last];
+            max1=max(max1,sum);
+            first++;
+            last--;
+        }
+        return max1;
+    }
+};
